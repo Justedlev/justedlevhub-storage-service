@@ -30,8 +30,8 @@ public class FileEntity extends BaseEntity implements Serializable {
     private String extension;
     @Column(name = "content_type", nullable = false)
     private String contentType;
-    @Column(name = "data", columnDefinition = "text", nullable = false)
-    private String data;
+    @Column(name = "path", columnDefinition = "text")
+    private String path;
     @Column(name = "size", nullable = false)
     private Long size;
 

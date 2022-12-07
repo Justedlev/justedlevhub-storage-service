@@ -1,5 +1,6 @@
 package com.justedlev.service.storage.service.impl;
 
+import com.justedlev.service.storage.config.properties.JStorageProperties;
 import com.justedlev.service.storage.config.properties.ServiceProperties;
 import com.justedlev.service.storage.constant.EndpointConstant;
 import com.justedlev.service.storage.model.response.FileResponse;
@@ -29,10 +30,10 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 public class FileServiceImpl implements FileService {
-    private final Path root = Paths.get("./uploads");
     private final FileRepository fileRepository;
     private final ServiceProperties serviceProperties;
     private final ModelMapper defaultMapper;
+    private final JStorageProperties properties;
 
     @Override
     @SneakyThrows
@@ -46,9 +47,9 @@ public class FileServiceImpl implements FileService {
                 .size(file.getSize())
                 .build();
         var res = fileRepository.save(fileEntity);
-        Path copyLocation = Paths.get(root + File.separator + res.getId());
+        Path copyLocation = Paths.get(properties.getRootPath() + File.separator + res.getId());
         Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-        res.setData(copyLocation.toString());
+        res.setPath(copyLocation.toString());
         res = fileRepository.save(res);
         var fileUrl = UriComponentsBuilder.fromHttpUrl(serviceProperties.getHost())
                 .path(EndpointConstant.FILE)

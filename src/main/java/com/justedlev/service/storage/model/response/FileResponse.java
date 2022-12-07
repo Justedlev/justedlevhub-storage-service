@@ -17,5 +17,5 @@ public class FileResponse {
     private String url;
     private Long size;
     @JsonIgnore
-    private String data;
+    private String path;
 }

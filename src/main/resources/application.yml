@@ -20,5 +20,6 @@ spring:
       max-request-size: 999999999999
 
 jstorage:
+  root-path: ${ROOT_PATH}
   service:
     host: ${SERVICE_HOST:http://localhost:${server.port}}${server.servlet.context-path}
