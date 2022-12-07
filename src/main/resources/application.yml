@@ -1,0 +1,24 @@
+server:
+  port: ${SERVER_PORT:8081}
+  servlet:
+    context-path: ${SERVER_MAIN_PATH:/api}
+spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+  servlet:
+    multipart:
+      max-file-size: 999999999999
+      max-request-size: 999999999999
+
+jstorage:
+  service:
+    host: ${SERVICE_HOST:http://localhost:${server.port}}${server.servlet.context-path}
