@@ -18,7 +18,7 @@ import java.util.UUID;
 @Entity
 @Table(name = "files")
 @ToString
-public class File extends BaseEntity implements Serializable {
+public class FileEntity extends BaseEntity implements Serializable {
     @Id
     @Column(name = "file_id")
     @GeneratedValue(generator = "uuid")
@@ -32,13 +32,15 @@ public class File extends BaseEntity implements Serializable {
     private String contentType;
     @Column(name = "data", columnDefinition = "text", nullable = false)
     private String data;
+    @Column(name = "size", nullable = false)
+    private Long size;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        File file = (File) o;
-        return id != null && Objects.equals(id, file.id);
+        FileEntity fileEntity = (FileEntity) o;
+        return id != null && Objects.equals(id, fileEntity.id);
     }
 
     @Override

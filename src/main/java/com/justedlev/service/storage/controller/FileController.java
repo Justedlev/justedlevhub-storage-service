@@ -15,10 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.util.Base64;
 import java.util.UUID;
 
@@ -55,32 +53,19 @@ public class FileController {
 
     @SneakyThrows
     @GetMapping(value = EndpointConstant.DOWNLOAD_FILE_ID)
-    public void download(HttpServletResponse response, @PathVariable UUID fileId) {
+    public ResponseEntity<Resource> download(@PathVariable UUID fileId) {
         var file = fileService.getById(fileId);
-        var bytes = Base64.getDecoder().decode(file.getData());
-        var inputStream = new ByteArrayInputStream(bytes);
+        var inputStream = new FileInputStream(file.getData());
         var inputStreamResource = new InputStreamResource(inputStream);
         var contentDisposition = ContentDisposition.attachment()
                 .filename(file.getName())
                 .build();
-        var inStream = new BufferedInputStream(inputStream);
-        var outStream = new BufferedOutputStream(response.getOutputStream());
 
-        byte[] buffer = new byte[1024];
-        int bytesRead = 0;
-
-        while ((bytesRead = inStream.read(buffer)) != -1) {
-            outStream.write(buffer, 0, bytesRead);
-        }
-
-        outStream.flush();
-        inStream.close();
-
-//        return ResponseEntity.ok()
-//                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
-//                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getData().length))
-//                .contentLength(file.getData().length)
-//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
-//                .body(inputStreamResource);
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
+                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getSize()))
+                .contentLength(file.getSize())
+                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .body(inputStreamResource);
     }
 }

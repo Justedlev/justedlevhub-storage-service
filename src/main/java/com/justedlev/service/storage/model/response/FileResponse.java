@@ -15,6 +15,7 @@ public class FileResponse {
     private String extension;
     private String contentType;
     private String url;
+    private Long size;
     @JsonIgnore
     private String data;
 }
