@@ -30,9 +30,8 @@ public class File extends BaseEntity implements Serializable {
     private String extension;
     @Column(name = "content_type", nullable = false)
     private String contentType;
-    @Lob
     @Column(name = "data", columnDefinition = "text", nullable = false)
-    private byte[] data;
+    private String data;
 
     @Override
     public boolean equals(Object o) {

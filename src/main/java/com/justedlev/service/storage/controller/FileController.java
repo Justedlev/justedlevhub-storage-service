@@ -15,7 +15,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayInputStream;
+import java.util.Base64;
 import java.util.UUID;
 
 @Slf4j
@@ -31,10 +35,11 @@ public class FileController {
     }
 
     @SneakyThrows
-    @GetMapping(value = EndpointConstant.PREVIEW_FILE_ID)
+    @GetMapping(value = EndpointConstant.FILE_ID)
     public ResponseEntity<Resource> preview(@PathVariable UUID fileId) {
         var file = fileService.getById(fileId);
-        var inputStream = new ByteArrayInputStream(file.getData());
+        var bytes = Base64.getDecoder().decode(file.getData());
+        var inputStream = new ByteArrayInputStream(bytes);
         var inputStreamResource = new InputStreamResource(inputStream);
         var contentDisposition = ContentDisposition.inline()
                 .filename(file.getName())
@@ -42,27 +47,40 @@ public class FileController {
 
         return ResponseEntity.ok()
                 .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getData().length))
-                .contentLength(file.getData().length)
+                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(bytes.length))
+                .contentLength(bytes.length)
                 .contentType(MediaType.valueOf(file.getContentType()))
                 .body(inputStreamResource);
     }
 
     @SneakyThrows
     @GetMapping(value = EndpointConstant.DOWNLOAD_FILE_ID)
-    public ResponseEntity<Resource> download(@PathVariable UUID fileId) {
+    public void download(HttpServletResponse response, @PathVariable UUID fileId) {
         var file = fileService.getById(fileId);
-        var inputStream = new ByteArrayInputStream(file.getData());
+        var bytes = Base64.getDecoder().decode(file.getData());
+        var inputStream = new ByteArrayInputStream(bytes);
         var inputStreamResource = new InputStreamResource(inputStream);
         var contentDisposition = ContentDisposition.attachment()
                 .filename(file.getName())
                 .build();
+        var inStream = new BufferedInputStream(inputStream);
+        var outStream = new BufferedOutputStream(response.getOutputStream());
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getData().length))
-                .contentLength(file.getData().length)
-                .contentType(MediaType.valueOf(file.getContentType()))
-                .body(inputStreamResource);
+        byte[] buffer = new byte[1024];
+        int bytesRead = 0;
+
+        while ((bytesRead = inStream.read(buffer)) != -1) {
+            outStream.write(buffer, 0, bytesRead);
+        }
+
+        outStream.flush();
+        inStream.close();
+
+//        return ResponseEntity.ok()
+//                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
+//                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getData().length))
+//                .contentLength(file.getData().length)
+//                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+//                .body(inputStreamResource);
     }
 }
