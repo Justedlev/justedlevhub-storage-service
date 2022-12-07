@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
-import java.util.Base64;
 import java.util.UUID;
 
 @Slf4j
@@ -30,20 +30,39 @@ public class FileController {
         return ResponseEntity.ok(fileService.store(file));
     }
 
-    @GetMapping(EndpointConstant.FILE_ID)
     @SneakyThrows
-    public ResponseEntity<Resource> getFileById(@PathVariable UUID fileId) {
+    @GetMapping(value = EndpointConstant.PREVIEW_FILE_ID)
+    public ResponseEntity<Resource> preview(@PathVariable UUID fileId) {
         var file = fileService.getById(fileId);
-        var bytes = Base64.getDecoder().decode(file.getContent());
-        var inputStream = new ByteArrayInputStream(bytes);
+        var inputStream = new ByteArrayInputStream(file.getData());
         var inputStreamResource = new InputStreamResource(inputStream);
-        var contentDisposition = String.format("attachment; filename=\"%s\"", file.getName());
+        var contentDisposition = ContentDisposition.inline()
+                .filename(file.getName())
+                .build();
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition)
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(bytes.length))
-                .contentLength(bytes.length)
-                .contentType(MediaType.APPLICATION_OCTET_STREAM)
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
+                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getData().length))
+                .contentLength(file.getData().length)
+                .contentType(MediaType.valueOf(file.getContentType()))
+                .body(inputStreamResource);
+    }
+
+    @SneakyThrows
+    @GetMapping(value = EndpointConstant.DOWNLOAD_FILE_ID)
+    public ResponseEntity<Resource> download(@PathVariable UUID fileId) {
+        var file = fileService.getById(fileId);
+        var inputStream = new ByteArrayInputStream(file.getData());
+        var inputStreamResource = new InputStreamResource(inputStream);
+        var contentDisposition = ContentDisposition.attachment()
+                .filename(file.getName())
+                .build();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
+                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getData().length))
+                .contentLength(file.getData().length)
+                .contentType(MediaType.valueOf(file.getContentType()))
                 .body(inputStreamResource);
     }
 }

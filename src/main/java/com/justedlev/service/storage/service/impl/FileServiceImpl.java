@@ -17,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.Base64;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -34,14 +33,12 @@ public class FileServiceImpl implements FileService {
     public FileResponse store(@NonNull MultipartFile file) {
         var fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         var extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        var content = Base64.getEncoder().encodeToString(file.getBytes());
 
         var fileEntity = File.builder()
                 .name(fileName)
                 .extension(extension)
-                .content(content)
+                .data(file.getBytes())
                 .contentType(file.getContentType())
-                .size(file.getSize())
                 .build();
         var res = fileRepository.save(fileEntity);
         var fileUrl = UriComponentsBuilder.fromHttpUrl(serviceProperties.getHost())

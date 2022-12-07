@@ -16,5 +16,5 @@ public class FileResponse {
     private String contentType;
     private String url;
     @JsonIgnore
-    private String content;
+    private byte[] data;
 }
