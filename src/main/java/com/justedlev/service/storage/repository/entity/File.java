@@ -2,10 +2,12 @@ package com.justedlev.service.storage.repository.entity;
 
 import com.justedlev.service.storage.repository.entity.base.BaseEntity;
 import lombok.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 import java.util.UUID;
 
 @AllArgsConstructor
@@ -15,6 +17,7 @@ import java.util.UUID;
 @Setter
 @Entity
 @Table(name = "files")
+@ToString
 public class File extends BaseEntity implements Serializable {
     @Id
     @Column(name = "file_id")
@@ -31,4 +34,17 @@ public class File extends BaseEntity implements Serializable {
     private String content;
     @Column(name = "size", nullable = false)
     private Long size;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        File file = (File) o;
+        return id != null && Objects.equals(id, file.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
