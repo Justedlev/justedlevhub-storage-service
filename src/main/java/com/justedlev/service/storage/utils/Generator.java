@@ -8,6 +8,6 @@ public final class Generator {
     }
 
     public static String generateFileName() {
-        return RandomStringUtils.randomAlphanumeric(32, 128);
+        return RandomStringUtils.randomAlphanumeric(32, 64);
     }
 }

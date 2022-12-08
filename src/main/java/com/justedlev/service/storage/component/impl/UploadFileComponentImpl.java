@@ -15,10 +15,8 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
@@ -39,13 +37,14 @@ public class UploadFileComponentImpl implements UploadFileComponent {
                         .contentType(current.getContentType())
                         .extension(current.getExtension())
                         .name(current.getOriginalName())
+                        .size(current.getSize())
                         .build())
                 .collect(Collectors.toList());
     }
 
     @SneakyThrows
     private void saveFileToDir(MultipartFile file, FileEntity fileEntity) {
-        Path copyLocation = Paths.get(properties.getRootPath() + File.separator + fileEntity.getName());
+        Path copyLocation = properties.getRootPath().resolve(fileEntity.getName());
         Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
     }
 

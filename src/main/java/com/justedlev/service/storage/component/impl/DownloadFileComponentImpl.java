@@ -15,7 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
@@ -40,9 +39,7 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
 
     @SneakyThrows
     private void setResource(DownloadFileResponse response, FileEntity entity) {
-        var path = properties.getRootPath()
-                .resolve(File.separator + entity.getName())
-                .toFile();
+        var path = properties.getRootPath().resolve(entity.getName()).toFile();
 
         if (!path.exists()) {
             fileRepository.delete(entity);
