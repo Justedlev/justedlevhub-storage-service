@@ -1,4 +1,4 @@
-package com.justedlev.service.accounting.repository.specification;
+package com.justedlev.service.storage.repository.specification;
 
 import lombok.NonNull;
 import org.springframework.data.jpa.domain.Specification;

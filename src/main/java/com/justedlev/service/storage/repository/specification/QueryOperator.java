@@ -1,4 +1,4 @@
-package com.justedlev.service.accounting.repository.specification;
+package com.justedlev.service.storage.repository.specification;
 
 public enum QueryOperator {
 
