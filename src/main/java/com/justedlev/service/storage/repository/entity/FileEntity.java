@@ -1,6 +1,7 @@
 package com.justedlev.service.storage.repository.entity;
 
 import com.justedlev.service.storage.repository.entity.base.BaseEntity;
+import com.justedlev.service.storage.utils.Generator;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
@@ -24,8 +25,11 @@ public class FileEntity extends BaseEntity implements Serializable {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-    @Column(name = "file_name", nullable = false)
-    private String name;
+    @Column(name = "original_file_name", nullable = false)
+    private String originalName;
+    @Builder.Default
+    @Column(name = "file_name", unique = true, nullable = false)
+    private String name = Generator.generateFileName();
     @Column(name = "file_extension", nullable = false)
     private String extension;
     @Column(name = "content_type", nullable = false)

@@ -4,6 +4,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.justedlev.service.storage.model.response.UploadFileResponse;
 
+import java.util.List;
+
 public interface UploadFileComponent {
-	UploadFileResponse upload(MultipartFile file);
+	List<UploadFileResponse> upload(List<MultipartFile> files);
 }

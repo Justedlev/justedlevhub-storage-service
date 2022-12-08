@@ -13,7 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.UUID;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -25,14 +25,14 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @SneakyThrows
-    public FileResponse store(@NonNull MultipartFile file) {
-        var res = uploadFileComponent.upload(file);
+    public List<FileResponse> store(@NonNull List<MultipartFile> files) {
+        var res = uploadFileComponent.upload(files);
 
-        return defaultMapper.map(res, FileResponse.class);
+        return List.of(defaultMapper.map(res, FileResponse[].class));
     }
 
     @Override
-    public DownloadFileResponse getById(UUID id) {
-        return downloadFileComponent.download(id);
+    public DownloadFileResponse getByName(String fileName) {
+        return downloadFileComponent.download(fileName);
     }
 }
