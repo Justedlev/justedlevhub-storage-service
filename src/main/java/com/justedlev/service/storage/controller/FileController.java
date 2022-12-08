@@ -51,23 +51,11 @@ public class FileController {
     @GetMapping(value = EndpointConstant.DOWNLOAD_FILE_ID)
     public ResponseEntity<Resource> download(@PathVariable UUID fileId) {
         var file = fileService.getById(fileId);
-        var contentDisposition = ContentDisposition.attachment()
-                .filename(file.getName())
-                .build();
-        var contentType = MediaType.APPLICATION_OCTET_STREAM;
-
-        if (file.getContentType().contains("image") || file.getContentType().contains("video") || file.getContentType().contains("audio")) {
-            contentType = MediaType.parseMediaType(file.getContentType());
-            contentDisposition = ContentDisposition.inline()
-                    .filename(file.getName())
-                    .build();
-        }
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, contentDisposition.toString())
-                .header(HttpHeaders.CONTENT_LENGTH, String.valueOf(file.getSize()))
+                .headers(file.getHeaders())
                 .contentLength(file.getSize())
-                .contentType(contentType)
+                .contentType(file.getContentType())
                 .body(file.getResource());
     }
 }

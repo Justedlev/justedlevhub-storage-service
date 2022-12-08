@@ -6,7 +6,11 @@ import java.util.UUID;
 
 import javax.persistence.EntityNotFoundException;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 
 import com.justedlev.service.storage.component.DownloadFileComponent;
@@ -23,6 +27,7 @@ import lombok.SneakyThrows;
 public class DownloadFileComponentImpl implements DownloadFileComponent {
     private final JStorageProperties properties;
     private final FileRepository fileRepository;
+    private final ModelMapper defaultMapper;
 
     @Override
     @SneakyThrows
@@ -33,13 +38,25 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
         var path = properties.getRootPath() + File.separator + entity.getId();
         var inputStream = new FileInputStream(path);
         var inputStreamResource = new InputStreamResource(inputStream);
+        var res = defaultMapper.map(entity, DownloadFileResponse.class);
+        res.setResource(inputStreamResource);
+        res.getHeaders()
+                .add(HttpHeaders.CONTENT_LENGTH, String.valueOf(entity.getSize()));
 
-        return DownloadFileResponse.builder()
-                .contentType(entity.getContentType())
-                .extension(entity.getExtension())
-                .size(entity.getSize())
-                .name(entity.getName())
-                .resource(inputStreamResource)
-                .build();
+        if (entity.getContentType().contains("image") || entity.getContentType().contains("video")
+                || entity.getContentType().contains("audio")) {
+            res.setContentType(MediaType.parseMediaType(entity.getContentType()));
+            res.getHeaders()
+                    .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
+                            .filename(entity.getName())
+                            .build().toString());
+        } else {
+            res.getHeaders()
+                    .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                            .filename(entity.getName())
+                            .build().toString());
+        }
+
+        return res;
     }
 }

@@ -1,6 +1,8 @@
 package com.justedlev.service.storage.model.response;
 
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,7 +16,11 @@ import lombok.NoArgsConstructor;
 public class DownloadFileResponse {
     private String name;
     private String extension;
-    private String contentType;
-    private Long size;
+    @Builder.Default
+    private MediaType contentType = MediaType.APPLICATION_OCTET_STREAM;
+    @Builder.Default
+    private Long size = 0L;
     private Resource resource;
+    @Builder.Default
+    private HttpHeaders headers = new HttpHeaders();
 }
