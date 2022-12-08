@@ -25,7 +25,12 @@ public class FileController {
         return ResponseEntity.ok(fileService.store(files));
     }
 
-    @GetMapping(value = EndpointConstant.FILE_NAME_ID)
+    @DeleteMapping(value = EndpointConstant.FILE_NAME_DELETE)
+    public ResponseEntity<Boolean> delete(@PathVariable String fileName) {
+        return ResponseEntity.ok(fileService.delete(fileName));
+    }
+
+    @GetMapping(value = EndpointConstant.FILE_NAME)
     public ResponseEntity<Resource> download(@PathVariable String fileName) {
         var file = fileService.getByName(fileName);
 

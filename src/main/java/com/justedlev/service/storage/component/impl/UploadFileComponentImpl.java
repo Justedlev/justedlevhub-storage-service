@@ -36,7 +36,7 @@ public class UploadFileComponentImpl implements UploadFileComponent {
                         .url(getUri(current))
                         .contentType(current.getContentType())
                         .extension(current.getExtension())
-                        .name(current.getOriginalName())
+                        .name(current.getName())
                         .size(current.getSize())
                         .build())
                 .collect(Collectors.toList());
@@ -51,7 +51,7 @@ public class UploadFileComponentImpl implements UploadFileComponent {
     private String getUri(FileEntity fileEntity) {
         return UriComponentsBuilder.fromHttpUrl(serviceProperties.getHost())
                 .path(EndpointConstant.FILE)
-                .path(EndpointConstant.FILE_NAME_ID.replace(PathVariableConstant.FILE_NAME, fileEntity.getName()))
+                .path(EndpointConstant.FILE_NAME.replace(PathVariableConstant.FILE_NAME, fileEntity.getName()))
                 .toUriString();
     }
 

@@ -9,5 +9,7 @@ import java.util.List;
 public interface FileService {
     List<FileResponse> store(List<MultipartFile> files);
 
+    Boolean delete(String fileName);
+
     DownloadFileResponse getByName(String fileName);
 }
