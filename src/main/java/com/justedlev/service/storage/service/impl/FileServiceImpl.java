@@ -26,7 +26,12 @@ public class FileServiceImpl implements FileService {
     @Override
     @SneakyThrows
     public List<FileResponse> store(@NonNull List<MultipartFile> files) {
+        var totalSize = files.stream()
+                .mapToLong(MultipartFile::getSize)
+                .sum();
+        log.info("Start upload {} files : total size {}", files.size(), totalSize);
         var res = uploadFileComponent.upload(files);
+        log.info("Uploaded {} files", res.size());
 
         return List.of(defaultMapper.map(res, FileResponse[].class));
     }
