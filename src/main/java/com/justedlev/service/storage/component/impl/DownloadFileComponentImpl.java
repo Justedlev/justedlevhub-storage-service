@@ -30,7 +30,7 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
 
     @Override
     public DownloadFileResponse download(String fileName) {
-        FileEntity entity = fileRepository.findByName(fileName)
+        FileEntity entity = fileRepository.findByFileName(fileName)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format("File %s not found", fileName)));
         var res = defaultMapper.map(entity, DownloadFileResponse.class);

@@ -18,7 +18,7 @@ public class DeleteFileComponentImpl implements DeleteFileComponent {
 
     @Override
     public Boolean deleteByName(String fileName) {
-        return fileRepository.findByName(fileName)
+        return fileRepository.findByFileName(fileName)
                 .map(this::delete)
                 .orElse(Boolean.FALSE);
     }

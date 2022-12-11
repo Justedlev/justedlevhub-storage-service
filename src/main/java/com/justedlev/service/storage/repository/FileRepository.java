@@ -8,5 +8,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface FileRepository extends JpaRepository<FileEntity, UUID>, JpaSpecificationExecutor<FileEntity> {
-    Optional<FileEntity> findByName(String fileName);
+    Optional<FileEntity> findByFileName(String fileName);
 }
