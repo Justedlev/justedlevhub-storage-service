@@ -1,10 +1,12 @@
 package com.justedlev.service.storage.component.impl;
 
 import com.justedlev.service.storage.component.DownloadFileComponent;
-import com.justedlev.service.storage.config.properties.JStorageProperties;
+import com.justedlev.service.storage.configuration.properties.JStorageProperties;
 import com.justedlev.service.storage.model.response.DownloadFileResponse;
 import com.justedlev.service.storage.repository.FileRepository;
 import com.justedlev.service.storage.repository.entity.FileEntity;
+
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Component;
 import javax.persistence.EntityNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 
 @Component
 @RequiredArgsConstructor
@@ -54,19 +57,42 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
     private void setHeaders(DownloadFileResponse response, FileEntity entity) {
         response.getHeaders()
                 .add(HttpHeaders.CONTENT_LENGTH, String.valueOf(entity.getSize()));
+        var contentMediaType = calculateContentMediaType(entity.getContentType());
 
-        if (entity.getContentType().contains("image") || entity.getContentType().contains("video")
-                || entity.getContentType().contains("audio")) {
-            response.setContentType(MediaType.parseMediaType(entity.getContentType()));
-            response.getHeaders()
-                    .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
-                            .filename(entity.getName())
-                            .build().toString());
-        } else {
-            response.getHeaders()
-                    .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-                            .filename(entity.getName())
-                            .build().toString());
+        switch (contentMediaType) {
+            case AUDIO:
+            case IMAGE:
+            case VIDIO: {
+                response.setContentType(MediaType.parseMediaType(entity.getContentType()));
+                response.getHeaders()
+                        .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
+                                .filename(entity.getName())
+                                .build().toString());
+                break;
+            }
+            default:
+                response.getHeaders()
+                        .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                                .filename(entity.getName())
+                                .build().toString());
         }
+    }
+
+    private ContentMediaType calculateContentMediaType(String contentType) {
+        return Arrays.stream(ContentMediaType.values())
+                .filter(current -> current.getValue().contains(contentType))
+                .findFirst()
+                .orElse(ContentMediaType.OTHER);
+    }
+
+    @Getter
+    @RequiredArgsConstructor
+    private enum ContentMediaType {
+        AUDIO("audio"),
+        VIDIO("vidio"),
+        IMAGE("image"),
+        OTHER("other");
+
+        private final String value;
     }
 }

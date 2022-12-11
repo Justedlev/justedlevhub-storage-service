@@ -1,14 +1,12 @@
-package com.justedlev.service.storage.config.properties;
+package com.justedlev.service.storage.configuration.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
-import java.nio.file.Path;
-
 @Data
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "jstorage")
-public class JStorageProperties {
-    private Path rootPath;
+@ConfigurationProperties(prefix = "jstorage.service")
+public class ServiceProperties {
+    private String host;
 }

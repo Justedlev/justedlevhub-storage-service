@@ -16,10 +16,10 @@ spring:
     open-in-view: false
   servlet:
     multipart:
-      max-file-size: 999999999999
-      max-request-size: 999999999999
+      max-file-size: 500MB
+      max-request-size: 500MB
 
 jstorage:
-  root-path: ${ROOT_PATH}
+  root-path: ${ROOT_PATH:.\tmp}
   service:
     host: ${SERVICE_HOST:http://localhost:${server.port}}${server.servlet.context-path}

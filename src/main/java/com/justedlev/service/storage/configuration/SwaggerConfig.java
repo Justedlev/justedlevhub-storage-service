@@ -1,4 +1,4 @@
-package com.justedlev.service.storage.config;
+package com.justedlev.service.storage.configuration;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;

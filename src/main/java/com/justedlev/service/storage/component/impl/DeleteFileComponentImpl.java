@@ -1,7 +1,7 @@
 package com.justedlev.service.storage.component.impl;
 
 import com.justedlev.service.storage.component.DeleteFileComponent;
-import com.justedlev.service.storage.config.properties.JStorageProperties;
+import com.justedlev.service.storage.configuration.properties.JStorageProperties;
 import com.justedlev.service.storage.repository.FileRepository;
 import com.justedlev.service.storage.repository.entity.FileEntity;
 import lombok.RequiredArgsConstructor;
