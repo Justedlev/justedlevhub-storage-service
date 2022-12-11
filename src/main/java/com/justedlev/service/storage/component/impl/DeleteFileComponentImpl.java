@@ -25,7 +25,7 @@ public class DeleteFileComponentImpl implements DeleteFileComponent {
 
     @SneakyThrows
     private Boolean delete(FileEntity entity) {
-        var file = properties.getRootPath().resolve(entity.getName());
+        var file = properties.getRootPath().resolve(entity.getFileName());
         Files.delete(file);
 
         if (!file.toFile().exists()) {

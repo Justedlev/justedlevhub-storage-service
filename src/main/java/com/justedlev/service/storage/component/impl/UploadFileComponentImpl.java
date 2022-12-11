@@ -36,7 +36,7 @@ public class UploadFileComponentImpl implements UploadFileComponent {
                         .url(getUri(current))
                         .contentType(current.getContentType())
                         .extension(current.getExtension())
-                        .name(current.getName())
+                        .fileName(current.getFileName())
                         .size(current.getSize())
                         .build())
                 .collect(Collectors.toList());
@@ -44,14 +44,14 @@ public class UploadFileComponentImpl implements UploadFileComponent {
 
     @SneakyThrows
     private void saveFileToDir(MultipartFile file, FileEntity fileEntity) {
-        Path copyLocation = properties.getRootPath().resolve(fileEntity.getName());
+        Path copyLocation = properties.getRootPath().resolve(fileEntity.getFileName());
         Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
     }
 
     private String getUri(FileEntity fileEntity) {
         return UriComponentsBuilder.fromHttpUrl(serviceProperties.getHost())
                 .path(EndpointConstant.FILE)
-                .path(EndpointConstant.FILE_NAME.replace(PathVariableConstant.FILE_NAME, fileEntity.getName()))
+                .path(EndpointConstant.FILE_NAME.replace(PathVariableConstant.FILE_NAME, fileEntity.getFileName()))
                 .toUriString();
     }
 
@@ -67,7 +67,7 @@ public class UploadFileComponentImpl implements UploadFileComponent {
         var fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         var extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
         var entity = FileEntity.builder()
-                .originalName(fileName)
+                .originalFileName(fileName)
                 .extension(extension)
                 .contentType(file.getContentType())
                 .size(file.getSize())

@@ -42,11 +42,11 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
 
     @SneakyThrows
     private void setResource(DownloadFileResponse response, FileEntity entity) {
-        var path = properties.getRootPath().resolve(entity.getName()).toFile();
+        var path = properties.getRootPath().resolve(entity.getFileName()).toFile();
 
         if (!path.exists()) {
             fileRepository.delete(entity);
-            throw new FileNotFoundException(String.format("File %s not found", entity.getName()));
+            throw new FileNotFoundException(String.format("File %s not found", entity.getFileName()));
         }
 
         var inputStream = new FileInputStream(path);
@@ -66,14 +66,14 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
                 response.setContentType(MediaType.parseMediaType(entity.getContentType()));
                 response.getHeaders()
                         .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
-                                .filename(entity.getName())
+                                .filename(entity.getFileName())
                                 .build().toString());
                 break;
             }
             default:
                 response.getHeaders()
                         .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-                                .filename(entity.getName())
+                                .filename(entity.getFileName())
                                 .build().toString());
         }
     }

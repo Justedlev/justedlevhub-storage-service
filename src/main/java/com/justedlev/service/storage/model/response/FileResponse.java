@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class FileResponse {
-    private String name;
+    private String fileName;
     private String extension;
     private String contentType;
     private String url;

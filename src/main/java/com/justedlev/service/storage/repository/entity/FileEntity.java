@@ -26,10 +26,10 @@ public class FileEntity extends BaseEntity implements Serializable {
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
     @Column(name = "original_file_name", nullable = false)
-    private String originalName;
+    private String originalFileName;
     @Builder.Default
     @Column(name = "file_name", unique = true, nullable = false)
-    private String name = Generator.generateFileName();
+    private String fileName = Generator.generateFileName();
     @Column(name = "file_extension", nullable = false)
     private String extension;
     @Column(name = "content_type", nullable = false)
