@@ -12,4 +12,5 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 @ConfigurationProperties(prefix = "jstorage")
 public class JStorageProperties {
     private Path rootPath;
+    private String downloadFilename;
 }

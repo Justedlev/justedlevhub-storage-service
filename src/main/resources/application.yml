@@ -21,5 +21,6 @@ spring:
 
 jstorage:
   root-path: ${ROOT_PATH:.\tmp}
+  download-filename: ${DOWNLOAD_FILENAME:jstorage-file}
   service:
     host: ${SERVICE_HOST:http://localhost:${server.port}}${server.servlet.context-path}

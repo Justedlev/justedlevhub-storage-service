@@ -66,21 +66,21 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
                 response.setContentType(MediaType.parseMediaType(entity.getContentType()));
                 response.getHeaders()
                         .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
-                                .filename(entity.getFileName())
+                                .filename(entity.getOriginalFileName())
                                 .build().toString());
                 break;
             }
             default:
                 response.getHeaders()
                         .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-                                .filename(entity.getFileName())
+                                .filename(entity.getOriginalFileName())
                                 .build().toString());
         }
     }
 
     private ContentMediaType calculateContentMediaType(String contentType) {
         return Arrays.stream(ContentMediaType.values())
-                .filter(current -> current.getValue().contains(contentType))
+                .filter(current -> contentType.contains(current.getValue()))
                 .findFirst()
                 .orElse(ContentMediaType.OTHER);
     }

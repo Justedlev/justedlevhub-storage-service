@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class DownloadFileResponse {
-    private String name;
+    private String fileName;
     private String extension;
     @Builder.Default
     private MediaType contentType = MediaType.APPLICATION_OCTET_STREAM;
