@@ -9,10 +9,10 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.justedlev</groupId>
-	<artifactId>j.storage</artifactId>
+	<artifactId>storage</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>j.storage</name>
-	<description>Project Storage</description>
+	<name>storage</name>
+	<description>Storage Service</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>
