@@ -1,4 +1,4 @@
-package com.justedlev.service.storage.configuration.properties;
+package com.justedlev.service.storage.properties;
 
 import lombok.Data;
 

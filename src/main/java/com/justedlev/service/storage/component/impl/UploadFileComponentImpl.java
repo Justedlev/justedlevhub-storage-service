@@ -1,8 +1,8 @@
 package com.justedlev.service.storage.component.impl;
 
 import com.justedlev.service.storage.component.UploadFileComponent;
-import com.justedlev.service.storage.configuration.properties.JStorageProperties;
-import com.justedlev.service.storage.configuration.properties.ServiceProperties;
+import com.justedlev.service.storage.properties.JStorageProperties;
+import com.justedlev.service.storage.properties.ServiceProperties;
 import com.justedlev.service.storage.constant.EndpointConstant;
 import com.justedlev.service.storage.constant.PathVariableConstant;
 import com.justedlev.service.storage.model.response.UploadFileResponse;

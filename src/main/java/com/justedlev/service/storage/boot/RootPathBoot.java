@@ -1,6 +1,6 @@
 package com.justedlev.service.storage.boot;
 
-import com.justedlev.service.storage.configuration.properties.JStorageProperties;
+import com.justedlev.service.storage.properties.JStorageProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.ApplicationArguments;
