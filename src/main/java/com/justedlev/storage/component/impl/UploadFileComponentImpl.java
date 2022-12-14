@@ -1,7 +1,7 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.UploadFileComponent;
-import com.justedlev.storage.properties.JStorageProperties;
+import com.justedlev.storage.properties.StorageProperties;
 import com.justedlev.storage.properties.ServiceProperties;
 import com.justedlev.storage.constant.EndpointConstant;
 import com.justedlev.storage.constant.PathVariableConstant;
@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class UploadFileComponentImpl implements UploadFileComponent {
-    private final JStorageProperties properties;
+    private final StorageProperties properties;
     private final ServiceProperties serviceProperties;
     private final FileRepository fileRepository;
 

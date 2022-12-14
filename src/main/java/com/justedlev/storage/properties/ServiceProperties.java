@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @Data
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "jstorage.service")
+@ConfigurationProperties(prefix = "storage.service")
 public class ServiceProperties {
     private String host;
 }

@@ -5,17 +5,17 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
-import com.justedlev.storage.properties.JStorageProperties;
+import com.justedlev.storage.properties.StorageProperties;
 import com.justedlev.storage.properties.ServiceProperties;
 
 @SpringBootApplication
 @EnableJpaAuditing
 @EnableConfigurationProperties({
-		JStorageProperties.class,
+		StorageProperties.class,
 		ServiceProperties.class
 })
-public class JStorageApplication {
+public class StorageApplication {
 	public static void main(String[] args) {
-		SpringApplication.run(JStorageApplication.class, args);
+		SpringApplication.run(StorageApplication.class, args);
 	}
 }

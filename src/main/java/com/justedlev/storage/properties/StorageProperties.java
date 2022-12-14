@@ -1,16 +1,15 @@
 package com.justedlev.storage.properties;
 
 import lombok.Data;
-
-import java.nio.file.Path;
-
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
+import java.nio.file.Path;
+
 @Data
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "jstorage")
-public class JStorageProperties {
+@ConfigurationProperties(prefix = "storage")
+public class StorageProperties {
     private Path rootPath;
     private String downloadFilename;
 }
