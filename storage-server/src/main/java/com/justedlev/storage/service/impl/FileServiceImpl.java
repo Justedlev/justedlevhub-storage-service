@@ -3,6 +3,7 @@ package com.justedlev.storage.service.impl;
 import com.justedlev.storage.component.DeleteFileComponent;
 import com.justedlev.storage.component.DownloadFileComponent;
 import com.justedlev.storage.component.UploadFileComponent;
+import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.DownloadFileResponse;
 import com.justedlev.storage.model.response.FileResponse;
 import com.justedlev.storage.service.FileService;
@@ -36,7 +37,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
-    public Boolean delete(String fileName) {
+    public DeletedFileResponse delete(String fileName) {
         return deleteFileComponent.deleteByName(fileName);
     }
 

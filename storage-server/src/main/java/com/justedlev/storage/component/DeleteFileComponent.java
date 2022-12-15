@@ -1,5 +1,7 @@
 package com.justedlev.storage.component;
 
+import com.justedlev.storage.model.response.DeletedFileResponse;
+
 public interface DeleteFileComponent {
-    Boolean deleteByName(String fileName);
+    DeletedFileResponse deleteByName(String fileName);
 }

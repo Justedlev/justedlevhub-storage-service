@@ -1,11 +1,13 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.DeleteFileComponent;
+import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.properties.StorageProperties;
 import com.justedlev.storage.repository.FileRepository;
 import com.justedlev.storage.repository.entity.FileEntity;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Files;
@@ -15,24 +17,34 @@ import java.nio.file.Files;
 public class DeleteFileComponentImpl implements DeleteFileComponent {
     private final FileRepository fileRepository;
     private final StorageProperties properties;
+    private final ModelMapper defaultMapper;
 
     @Override
-    public Boolean deleteByName(String fileName) {
+    public DeletedFileResponse deleteByName(String fileName) {
         return fileRepository.findByFileName(fileName)
-                .map(this::delete)
-                .orElse(Boolean.FALSE);
+                .map(current -> {
+                    var res = defaultMapper.map(current, DeletedFileResponse.class);
+                    res.setIsDeleted(delete(current));
+
+                    return res;
+                })
+                .orElse(DeletedFileResponse.builder()
+                        .fileName(fileName)
+                        .build());
+
     }
 
     @SneakyThrows
     private Boolean delete(FileEntity entity) {
         var file = properties.getRootPath().resolve(entity.getFileName());
-        Files.delete(file);
 
-        if (!file.toFile().exists()) {
-            fileRepository.delete(entity);
-            return Boolean.TRUE;
+        if (!Files.exists(file)) {
+            return Boolean.FALSE;
         }
 
-        return Boolean.FALSE;
+        Files.delete(file);
+        fileRepository.delete(entity);
+
+        return Boolean.TRUE;
     }
 }
