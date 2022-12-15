@@ -60,21 +60,17 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
         var contentMediaType = calculateContentMediaType(entity.getContentType());
 
         switch (contentMediaType) {
-            case AUDIO:
-            case IMAGE:
-            case VIDIO: {
+            case AUDIO, IMAGE, VIDIO -> {
                 response.setContentType(MediaType.parseMediaType(entity.getContentType()));
                 response.getHeaders()
                         .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
                                 .filename(entity.getOriginalFileName())
                                 .build().toString());
-                break;
             }
-            default:
-                response.getHeaders()
-                        .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
-                                .filename(entity.getOriginalFileName())
-                                .build().toString());
+            default -> response.getHeaders()
+                    .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
+                            .filename(entity.getOriginalFileName())
+                            .build().toString());
         }
     }
 
