@@ -1,6 +1,7 @@
 package com.justedlev.storage.controller;
 
 import com.justedlev.storage.constant.EndpointConstant;
+import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.FileResponse;
 import com.justedlev.storage.service.FileService;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class FileController {
     }
 
     @DeleteMapping(value = EndpointConstant.FILE_NAME_DELETE)
-    public ResponseEntity<Boolean> delete(@PathVariable String fileName) {
+    public ResponseEntity<DeletedFileResponse> delete(@PathVariable String fileName) {
         return ResponseEntity.ok(fileService.delete(fileName));
     }
 

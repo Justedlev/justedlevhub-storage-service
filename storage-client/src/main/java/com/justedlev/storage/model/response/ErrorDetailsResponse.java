@@ -1,4 +1,4 @@
-package com.justedlev.storage.model;
+package com.justedlev.storage.model.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.util.Date;
 @AllArgsConstructor
 @Data
 @Builder
-public class ErrorDetails {
+public class ErrorDetailsResponse {
     @Builder.Default
     private Date timestamp = new Date();
     private String message;

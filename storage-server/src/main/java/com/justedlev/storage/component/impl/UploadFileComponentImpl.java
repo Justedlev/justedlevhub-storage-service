@@ -1,11 +1,11 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.UploadFileComponent;
-import com.justedlev.storage.properties.StorageProperties;
-import com.justedlev.storage.properties.ServiceProperties;
 import com.justedlev.storage.constant.EndpointConstant;
 import com.justedlev.storage.constant.PathVariableConstant;
 import com.justedlev.storage.model.response.UploadFileResponse;
+import com.justedlev.storage.properties.ServiceProperties;
+import com.justedlev.storage.properties.StorageProperties;
 import com.justedlev.storage.repository.FileRepository;
 import com.justedlev.storage.repository.entity.FileEntity;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +20,7 @@ import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
@@ -39,13 +40,7 @@ public class UploadFileComponentImpl implements UploadFileComponent {
                         .fileName(current.getFileName())
                         .size(current.getSize())
                         .build())
-                .collect(Collectors.toList());
-    }
-
-    @SneakyThrows
-    private void saveFileToDir(MultipartFile file, FileEntity fileEntity) {
-        Path copyLocation = properties.getRootPath().resolve(fileEntity.getFileName());
-        Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
+                .toList();
     }
 
     private String getUri(FileEntity fileEntity) {
@@ -56,24 +51,28 @@ public class UploadFileComponentImpl implements UploadFileComponent {
     }
 
     private List<FileEntity> saveFiles(List<MultipartFile> files) {
-        var entities = files.parallelStream()
-                .map(this::toEntity)
-                .collect(Collectors.toList());
+        var fileMap = files.stream()
+                .collect(Collectors.toMap(this::toEntity, Function.identity()));
+        fileMap.forEach(this::saveFileToDir);
 
-        return fileRepository.saveAll(entities);
+        return fileRepository.saveAll(fileMap.keySet());
     }
 
     private FileEntity toEntity(MultipartFile file) {
         var fileName = StringUtils.cleanPath(Objects.requireNonNull(file.getOriginalFilename()));
         var extension = StringUtils.getFilenameExtension(file.getOriginalFilename());
-        var entity = FileEntity.builder()
+
+        return FileEntity.builder()
                 .originalFileName(fileName)
                 .extension(extension)
                 .contentType(file.getContentType())
                 .size(file.getSize())
                 .build();
-        saveFileToDir(file, entity);
+    }
 
-        return entity;
+    @SneakyThrows
+    private void saveFileToDir(FileEntity fileEntity, MultipartFile file) {
+        Path copyLocation = properties.getRootPath().resolve(fileEntity.getFileName());
+        Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
     }
 }

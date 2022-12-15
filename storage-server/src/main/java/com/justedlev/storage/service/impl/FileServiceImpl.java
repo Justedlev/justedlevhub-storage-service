@@ -3,6 +3,7 @@ package com.justedlev.storage.service.impl;
 import com.justedlev.storage.component.DeleteFileComponent;
 import com.justedlev.storage.component.DownloadFileComponent;
 import com.justedlev.storage.component.UploadFileComponent;
+import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.DownloadFileResponse;
 import com.justedlev.storage.model.response.FileResponse;
 import com.justedlev.storage.service.FileService;
@@ -29,15 +30,14 @@ public class FileServiceImpl implements FileService {
         var totalSize = files.stream()
                 .mapToLong(MultipartFile::getSize)
                 .sum();
-        log.info("Start upload {} files : total size {}", files.size(), totalSize);
         var res = uploadFileComponent.upload(files);
-        log.info("Uploaded {} files", res.size());
+        log.info("Uploaded {} files with total size : {} bites", res.size(), totalSize);
 
         return List.of(defaultMapper.map(res, FileResponse[].class));
     }
 
     @Override
-    public Boolean delete(String fileName) {
+    public DeletedFileResponse delete(String fileName) {
         return deleteFileComponent.deleteByName(fileName);
     }
 

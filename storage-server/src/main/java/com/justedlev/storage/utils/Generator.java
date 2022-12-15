@@ -1,6 +1,6 @@
 package com.justedlev.storage.utils;
 
-import org.apache.commons.lang3.RandomStringUtils;
+import java.util.UUID;
 
 public final class Generator {
     private Generator() {
@@ -8,6 +8,6 @@ public final class Generator {
     }
 
     public static String generateFileName() {
-        return RandomStringUtils.randomAlphanumeric(32, 64);
+        return UUID.randomUUID().toString();
     }
 }
