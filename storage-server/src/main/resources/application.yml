@@ -19,5 +19,6 @@ spring:
       max-file-size: 500MB
       max-request-size: 500MB
 
-storage:
-  download-filename: ${DOWNLOAD_FILENAME:jstorage-file}
+justedlev-service:
+  storage:
+    download-filename: ${DOWNLOAD_FILENAME:jstorage-file}

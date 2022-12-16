@@ -13,7 +13,7 @@ import java.util.List;
 
 @FeignClient(
         name = "storage-api-client",
-        url = "${justedlev-service.storage.host}",
+        url = "${justedlev-service.storage.client.url}",
         configuration = StorageFeignClientConfiguration.class
 )
 public interface StorageFeignClient {

@@ -6,7 +6,7 @@ import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 
 @Data
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "storage.service")
+@ConfigurationProperties(prefix = "justedlev-service.storage.service")
 public class ServiceProperties {
     private String host;
 }

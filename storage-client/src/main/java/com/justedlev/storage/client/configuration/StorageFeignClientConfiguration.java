@@ -1,25 +1,23 @@
 package com.justedlev.storage.client.configuration;
 
 import feign.Request;
-import org.springframework.beans.factory.annotation.Value;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 
-import java.time.Duration;
-import java.time.temporal.ChronoUnit;
 import java.util.concurrent.TimeUnit;
 
+@Configuration
+@RequiredArgsConstructor
 public class StorageFeignClientConfiguration {
-    @Value("${justedlev-service.storage.read-timeout:1m}")
-    private Duration readTimeout;
-    @Value("${justedlev-service.storage.connect-timeout:10s}")
-    private Duration connectTimeout;
+    private final StorageFeignClientProperties properties;
 
     @Bean
     public Request.Options requestOptions() {
         return new Request.Options(
-                connectTimeout.get(ChronoUnit.MILLIS),
+                properties.getConnectTimeout().toMillis(),
                 TimeUnit.MILLISECONDS,
-                readTimeout.get(ChronoUnit.MILLIS),
+                properties.getReadTimeout().toMillis(),
                 TimeUnit.MILLISECONDS,
                 Boolean.FALSE
         );
