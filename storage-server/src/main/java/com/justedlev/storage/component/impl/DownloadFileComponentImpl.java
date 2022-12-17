@@ -20,6 +20,7 @@ import javax.persistence.EntityNotFoundException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Arrays;
+import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
@@ -59,15 +60,16 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
                 .add(HttpHeaders.CONTENT_LENGTH, String.valueOf(entity.getSize()));
         var contentMediaType = calculateContentMediaType(entity.getContentType());
 
-        switch (contentMediaType) {
-            case AUDIO, IMAGE, VIDIO -> {
-                response.setContentType(MediaType.parseMediaType(entity.getContentType()));
-                response.getHeaders()
-                        .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
-                                .filename(entity.getOriginalFileName())
-                                .build().toString());
-            }
-            default -> response.getHeaders()
+        if (Objects.requireNonNull(contentMediaType) == ContentMediaType.AUDIO ||
+                contentMediaType == ContentMediaType.IMAGE ||
+                contentMediaType == ContentMediaType.VIDIO) {
+            response.setContentType(MediaType.parseMediaType(entity.getContentType()));
+            response.getHeaders()
+                    .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
+                            .filename(entity.getOriginalFileName())
+                            .build().toString());
+        } else {
+            response.getHeaders()
                     .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.attachment()
                             .filename(entity.getOriginalFileName())
                             .build().toString());
