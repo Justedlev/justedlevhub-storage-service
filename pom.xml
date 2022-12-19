@@ -13,14 +13,14 @@
     <packaging>pom</packaging>
 
     <groupId>com.justedlev</groupId>
-    <artifactId>storage-service</artifactId>
+    <artifactId>jstorage-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>storage-service</name>
+    <name>jstorage-service</name>
     <description>Storage Service</description>
 
     <modules>
-        <module>storage-server</module>
-        <module>storage-client</module>
+        <module>jstorage-server</module>
+        <module>jstorage-client</module>
     </modules>
 
     <properties>
@@ -30,7 +30,23 @@
         <spring-cloud.version>2021.0.5</spring-cloud.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -68,4 +84,23 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>netflix-candidates</id>
+            <name>Netflix Candidates</name>
+            <url>https://artifactory-oss.prod.netflix.net/artifactory/maven-oss-candidates</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/milestone</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
 </project>

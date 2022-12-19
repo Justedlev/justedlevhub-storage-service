@@ -5,16 +5,16 @@
 
 	<parent>
 		<groupId>com.justedlev</groupId>
-		<artifactId>storage-service</artifactId>
+		<artifactId>jstorage-service</artifactId>
 		<version>1.0.0-SNAPSHOT</version>
 	</parent>
 
-	<artifactId>storage-server</artifactId>
+	<artifactId>jstorage-server</artifactId>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.justedlev</groupId>
-			<artifactId>storage-client</artifactId>
+			<artifactId>jstorage-client</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 		<dependency>
