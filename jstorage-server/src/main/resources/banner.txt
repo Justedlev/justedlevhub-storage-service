@@ -5,4 +5,5 @@
  / /    \____(_)____/\__/\____/_/   \__,_/\__, /\___/   /____/\___/_/    |___/_/\___/\___/  _/ /
 /__/                                     /____/                                            /__/
 
---< v1.0.0 >----------------------------------------------------------------< Justedlev {-...-} >--
+Version: ${application.formatted-version} :: ${application.title}
+Powered by Spring Boot ${spring-boot.formatted-version}
