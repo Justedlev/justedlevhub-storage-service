@@ -1,8 +1,8 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.UploadFileComponent;
-import com.justedlev.storage.constant.EndpointConstant;
-import com.justedlev.storage.constant.PathVariableConstant;
+import com.justedlev.storage.client.EndpointConstant;
+import com.justedlev.storage.client.PathVariableConstant;
 import com.justedlev.storage.model.response.UploadFileResponse;
 import com.justedlev.storage.properties.ServiceProperties;
 import com.justedlev.storage.properties.StorageProperties;

@@ -1,6 +1,6 @@
 package com.justedlev.storage;
 
-import com.justedlev.storage.client.configuration.StorageFeignClientProperties;
+import com.justedlev.storage.client.configuration.JstorageFeignClientProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
@@ -16,7 +16,7 @@ import com.justedlev.storage.properties.ServiceProperties;
 @EnableConfigurationProperties({
 		StorageProperties.class,
 		ServiceProperties.class,
-		StorageFeignClientProperties.class
+		JstorageFeignClientProperties.class
 })
 public class StorageApplication {
 	public static void main(String[] args) {

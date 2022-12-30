@@ -1,6 +1,6 @@
 package com.justedlev.storage.controller;
 
-import com.justedlev.storage.constant.EndpointConstant;
+import com.justedlev.storage.client.EndpointConstant;
 import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.FileResponse;
 import com.justedlev.storage.service.FileService;

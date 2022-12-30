@@ -9,8 +9,8 @@ import java.time.temporal.ChronoUnit;
 
 @Setter
 @Getter
-@ConfigurationProperties(prefix = "justedlev-service.storage.client")
-public class StorageFeignClientProperties {
+@ConfigurationProperties(prefix = "jstorage.client")
+public class JstorageFeignClientProperties {
     private String url;
     private Duration connectTimeout = Duration.of(10, ChronoUnit.SECONDS);
     private Duration readTimeout = Duration.of(2, ChronoUnit.MINUTES);

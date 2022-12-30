@@ -90,7 +90,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <packageName>com.justedlev.account</packageName>
+                            <packageName>com.justedlev.storage</packageName>
                         </manifest>
                         <manifestEntries>
                             <Created-By>Justedlev {-...-}</Created-By>

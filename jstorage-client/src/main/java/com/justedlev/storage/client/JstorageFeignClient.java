@@ -1,6 +1,6 @@
 package com.justedlev.storage.client;
 
-import com.justedlev.storage.client.configuration.StorageFeignClientConfiguration;
+import com.justedlev.storage.client.configuration.JstorageFeignClientConfiguration;
 import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.UploadFileResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -12,17 +12,17 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @FeignClient(
-        name = "storage-api-client",
-        url = "${justedlev-service.storage.client.url}",
-        configuration = StorageFeignClientConfiguration.class
+        name = "jstorage-api-client",
+        url = "${jstorage.client.url}",
+        configuration = JstorageFeignClientConfiguration.class
 )
-public interface StorageFeignClient {
-    @PostMapping(value = "/v1/file/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+public interface JstorageFeignClient {
+    @PostMapping(value = EndpointConstant.FILE_UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     List<UploadFileResponse> upload(@RequestPart List<MultipartFile> files);
 
-    @DeleteMapping(value = "/v1/file/{fileName}/delete")
+    @DeleteMapping(value = EndpointConstant.FILE_FILE_NAME_DELETE)
     DeletedFileResponse delete(@PathVariable String fileName);
 
-    @GetMapping(value = "/v1/file/{fileName}")
+    @GetMapping(value = EndpointConstant.FILE_FILE_NAME)
     Resource download(@PathVariable String fileName);
 }

@@ -1,4 +1,4 @@
-package com.justedlev.storage.constant;
+package com.justedlev.storage.client;
 
 public final class PathVariableConstant {
     public static final String FILE_NAME = "{fileName}";
