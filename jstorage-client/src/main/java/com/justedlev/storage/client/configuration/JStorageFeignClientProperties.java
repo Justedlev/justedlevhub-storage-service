@@ -10,7 +10,7 @@ import java.time.temporal.ChronoUnit;
 @Setter
 @Getter
 @ConfigurationProperties(prefix = "jstorage.client")
-public class JstorageFeignClientProperties {
+public class JStorageFeignClientProperties {
     private String url;
     private Duration connectTimeout = Duration.of(10, ChronoUnit.SECONDS);
     private Duration readTimeout = Duration.of(2, ChronoUnit.MINUTES);

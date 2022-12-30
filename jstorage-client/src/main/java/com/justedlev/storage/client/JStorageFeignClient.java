@@ -1,6 +1,6 @@
 package com.justedlev.storage.client;
 
-import com.justedlev.storage.client.configuration.JstorageFeignClientConfiguration;
+import com.justedlev.storage.client.configuration.JStorageFeignClientConfiguration;
 import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.UploadFileResponse;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -14,9 +14,9 @@ import java.util.List;
 @FeignClient(
         name = "jstorage-api-client",
         url = "${jstorage.client.url}",
-        configuration = JstorageFeignClientConfiguration.class
+        configuration = JStorageFeignClientConfiguration.class
 )
-public interface JstorageFeignClient {
+public interface JStorageFeignClient {
     @PostMapping(value = EndpointConstant.FILE_UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     List<UploadFileResponse> upload(@RequestPart List<MultipartFile> files);
 

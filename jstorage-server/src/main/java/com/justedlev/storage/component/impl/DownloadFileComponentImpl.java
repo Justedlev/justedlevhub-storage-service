@@ -1,7 +1,7 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.DownloadFileComponent;
-import com.justedlev.storage.properties.StorageProperties;
+import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.model.response.DownloadFileResponse;
 import com.justedlev.storage.repository.FileRepository;
 import com.justedlev.storage.repository.entity.FileEntity;
@@ -25,7 +25,7 @@ import java.util.Objects;
 @Component
 @RequiredArgsConstructor
 public class DownloadFileComponentImpl implements DownloadFileComponent {
-    private final StorageProperties properties;
+    private final JStorageProperties properties;
     private final FileRepository fileRepository;
     private final ModelMapper defaultMapper;
 

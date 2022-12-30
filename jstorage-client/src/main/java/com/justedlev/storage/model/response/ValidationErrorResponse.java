@@ -6,16 +6,28 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
-public class ErrorDetailsResponse {
+public class ValidationErrorResponse {
     @JsonFormat(shape = JsonFormat.Shape.STRING)
     @Builder.Default
     private Date timestamp = new Date();
-    private String message;
     private String details;
+    @Builder.Default
+    private List<Violation> violations = new ArrayList<>();
+
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Data
+    @Builder
+    public static class Violation {
+        private String fieldName;
+        private String message;
+    }
 }

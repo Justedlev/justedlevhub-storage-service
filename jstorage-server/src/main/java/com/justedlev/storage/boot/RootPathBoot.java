@@ -1,6 +1,6 @@
 package com.justedlev.storage.boot;
 
-import com.justedlev.storage.properties.StorageProperties;
+import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.repository.FileRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -15,7 +15,7 @@ import java.nio.file.Files;
 @Component
 @RequiredArgsConstructor
 public class RootPathBoot implements ApplicationRunner {
-    private final StorageProperties properties;
+    private final JStorageProperties properties;
     private final FileRepository fileRepository;
 
     @Override

@@ -2,7 +2,7 @@ package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.DeleteFileComponent;
 import com.justedlev.storage.model.response.DeletedFileResponse;
-import com.justedlev.storage.properties.StorageProperties;
+import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.repository.FileRepository;
 import com.justedlev.storage.repository.entity.FileEntity;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class DeleteFileComponentImpl implements DeleteFileComponent {
     private final FileRepository fileRepository;
-    private final StorageProperties properties;
+    private final JStorageProperties properties;
     private final ModelMapper defaultMapper;
 
     @Override

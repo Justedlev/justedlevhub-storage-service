@@ -1,10 +1,10 @@
 server:
-  port: ${SERVER_PORT:0}
+  port: 0
   servlet:
     context-path: ${SERVER_MAIN_PATH:/api}
 spring:
   application:
-    name: j-storage-service
+    name: jstorage-service
   datasource:
     url: ${DB_URL}
     username: ${DB_USER}
@@ -23,10 +23,9 @@ spring:
 eureka:
   client:
     service-url:
-      default-zone: http://localhost:8761/j-eureka
+      default-zone: http://localhost:8761/eureka
   instance:
     instance-id: ${spring.application.name}:${random.uuid}
 
-justedlev-service:
-  storage:
-    download-filename: ${DOWNLOAD_FILENAME:jstorage-file}
+jstorage:
+  download-filename: ${DOWNLOAD_FILENAME:jstorage-file}

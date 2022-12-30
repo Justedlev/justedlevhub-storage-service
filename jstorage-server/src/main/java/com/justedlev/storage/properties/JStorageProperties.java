@@ -8,8 +8,8 @@ import java.nio.file.Path;
 
 @Data
 @ConfigurationPropertiesScan
-@ConfigurationProperties(prefix = "justedlev-service.storage")
-public class StorageProperties {
+@ConfigurationProperties(prefix = "jstorage")
+public class JStorageProperties {
     private Path rootPath;
     private String downloadFilename;
 }

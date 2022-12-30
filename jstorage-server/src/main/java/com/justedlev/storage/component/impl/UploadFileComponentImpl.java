@@ -5,7 +5,7 @@ import com.justedlev.storage.client.EndpointConstant;
 import com.justedlev.storage.client.PathVariableConstant;
 import com.justedlev.storage.model.response.UploadFileResponse;
 import com.justedlev.storage.properties.ServiceProperties;
-import com.justedlev.storage.properties.StorageProperties;
+import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.repository.FileRepository;
 import com.justedlev.storage.repository.entity.FileEntity;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 @Component
 @RequiredArgsConstructor
 public class UploadFileComponentImpl implements UploadFileComponent {
-    private final StorageProperties properties;
+    private final JStorageProperties properties;
     private final ServiceProperties serviceProperties;
     private final FileRepository fileRepository;
 
