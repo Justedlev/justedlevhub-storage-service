@@ -1,0 +1,5 @@
+jstorage:
+  root-path: ${ROOT_PATH:.\.tmp}
+  download-filename: ${DOWNLOAD_FILENAME:jstorage-file}
+  service:
+    host: ${SERVICE_HOST:http://localhost:8765/${spring.application.name}${server.servlet.context-path}}
