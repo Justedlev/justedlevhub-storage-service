@@ -14,14 +14,16 @@
 	<dependencies>
 		<dependency>
 			<groupId>com.justedlev</groupId>
-			<artifactId>jmodel</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<artifactId>jcommon</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>com.justedlev</groupId>
 			<artifactId>jstorage-client</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
+
+		<!--Utils-->
 		<dependency>
 			<groupId>org.modelmapper</groupId>
 			<artifactId>modelmapper</artifactId>
@@ -32,20 +34,30 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>1.6.7</version>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-actuator</artifactId>
-		</dependency>
+		<!--Utils-->
+
+		<!--Data-->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		<!--Data-->
+
+		<!--Spring-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
+		<!--Spring-->
+
+		<!--Tests-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!--Tests-->
 	</dependencies>
 
 	<build>

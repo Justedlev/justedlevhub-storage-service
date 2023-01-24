@@ -1,8 +1,8 @@
 package com.justedlev.storage.controller;
 
-import com.justedlev.jmodel.response.ErrorDetailsResponse;
-import com.justedlev.jmodel.response.ValidationErrorResponse;
-import com.justedlev.jmodel.response.ViolationResponse;
+import com.justedlev.common.model.response.ErrorDetailsResponse;
+import com.justedlev.common.model.response.ValidationErrorResponse;
+import com.justedlev.common.model.response.ViolationResponse;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -20,8 +20,11 @@ import java.io.FileNotFoundException;
 
 @Slf4j
 @ControllerAdvice
-public class AdvisorController extends ResponseEntityExceptionHandler {
-    @ExceptionHandler(value = {EntityNotFoundException.class, FileNotFoundException.class})
+public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
+    @ExceptionHandler(value = {
+            EntityNotFoundException.class,
+            FileNotFoundException.class
+    })
     public ResponseEntity<ErrorDetailsResponse> handleNotFountException(Exception ex, WebRequest request) {
         log.error(ex.getMessage());
         ex.printStackTrace();
@@ -34,8 +37,8 @@ public class AdvisorController extends ResponseEntityExceptionHandler {
     }
 
     @ExceptionHandler(value = ConstraintViolationException.class)
-    public ResponseEntity<ValidationErrorResponse> handleFeignException(ConstraintViolationException ex,
-                                                                        WebRequest request) {
+    public ResponseEntity<ValidationErrorResponse> handleConstraintViolationException(ConstraintViolationException ex,
+                                                                                      WebRequest request) {
         log.error(ex.getMessage());
         ex.printStackTrace();
         var violations = ex.getConstraintViolations()
