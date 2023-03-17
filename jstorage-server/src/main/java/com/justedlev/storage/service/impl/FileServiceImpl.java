@@ -1,7 +1,7 @@
 package com.justedlev.storage.service.impl;
 
 import com.justedlev.storage.component.DeleteFileComponent;
-import com.justedlev.storage.component.DownloadFileComponent;
+import com.justedlev.storage.component.FileDownloader;
 import com.justedlev.storage.component.UploadFileComponent;
 import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.model.response.DownloadFileResponse;
@@ -22,7 +22,7 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
     private final ModelMapper defaultMapper;
     private final UploadFileComponent uploadFileComponent;
-    private final DownloadFileComponent downloadFileComponent;
+    private final FileDownloader fileDownloader;
     private final DeleteFileComponent deleteFileComponent;
 
     @Override
@@ -43,6 +43,6 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public DownloadFileResponse getByName(String fileName) {
-        return downloadFileComponent.download(fileName);
+        return fileDownloader.download(fileName);
     }
 }
