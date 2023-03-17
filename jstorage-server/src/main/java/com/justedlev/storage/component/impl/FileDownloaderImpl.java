@@ -1,11 +1,10 @@
 package com.justedlev.storage.component.impl;
 
-import com.justedlev.storage.component.DownloadFileComponent;
-import com.justedlev.storage.properties.JStorageProperties;
+import com.justedlev.storage.component.FileDownloader;
 import com.justedlev.storage.model.response.DownloadFileResponse;
+import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.repository.FileRepository;
 import com.justedlev.storage.repository.entity.FileEntity;
-
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -24,7 +23,7 @@ import java.util.Objects;
 
 @Component
 @RequiredArgsConstructor
-public class DownloadFileComponentImpl implements DownloadFileComponent {
+public class FileDownloaderImpl implements FileDownloader {
     private final JStorageProperties properties;
     private final FileRepository fileRepository;
     private final ModelMapper defaultMapper;
@@ -62,7 +61,7 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
 
         if (Objects.requireNonNull(contentMediaType) == ContentMediaType.AUDIO ||
                 contentMediaType == ContentMediaType.IMAGE ||
-                contentMediaType == ContentMediaType.VIDIO) {
+                contentMediaType == ContentMediaType.VIDEO) {
             response.setContentType(MediaType.parseMediaType(entity.getContentType()));
             response.getHeaders()
                     .add(HttpHeaders.CONTENT_DISPOSITION, ContentDisposition.inline()
@@ -87,7 +86,7 @@ public class DownloadFileComponentImpl implements DownloadFileComponent {
     @RequiredArgsConstructor
     private enum ContentMediaType {
         AUDIO("audio"),
-        VIDIO("vidio"),
+        VIDEO("video"),
         IMAGE("image"),
         OTHER("other");
 
