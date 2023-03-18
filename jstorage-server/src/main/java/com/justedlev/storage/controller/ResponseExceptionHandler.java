@@ -26,8 +26,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
             FileNotFoundException.class
     })
     public ResponseEntity<ErrorDetailsResponse> handleNotFountException(Exception ex, WebRequest request) {
-        log.error(ex.getMessage());
-        ex.printStackTrace();
+        log.error(ex.getMessage(), ex);
         ErrorDetailsResponse errorDetailsResponse = ErrorDetailsResponse.builder()
                 .details(request.getDescription(false))
                 .message(ex.getMessage())
@@ -39,8 +38,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(value = ConstraintViolationException.class)
     public ResponseEntity<ValidationErrorResponse> handleConstraintViolationException(ConstraintViolationException ex,
                                                                                       WebRequest request) {
-        log.error(ex.getMessage());
-        ex.printStackTrace();
+        log.error(ex.getMessage(), ex);
         var violations = ex.getConstraintViolations()
                 .stream()
                 .map(current -> ViolationResponse.builder()
@@ -62,8 +60,7 @@ public class ResponseExceptionHandler extends ResponseEntityExceptionHandler {
                                                                   @NonNull HttpHeaders headers,
                                                                   @NonNull HttpStatus status,
                                                                   @NonNull WebRequest request) {
-        log.error(ex.getMessage());
-        ex.printStackTrace();
+        log.error(ex.getMessage(), ex);
         var violations = ex.getBindingResult().getFieldErrors()
                 .stream()
                 .map(current -> ViolationResponse.builder()

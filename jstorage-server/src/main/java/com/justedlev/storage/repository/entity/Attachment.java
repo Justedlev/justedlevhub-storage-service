@@ -1,7 +1,6 @@
 package com.justedlev.storage.repository.entity;
 
-import com.justedlev.storage.repository.entity.base.BaseEntity;
-import com.justedlev.storage.utils.Generator;
+import com.justedlev.common.entity.BaseEntity;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,32 +16,29 @@ import java.util.UUID;
 @Getter
 @Setter
 @Entity
-@Table(name = "files")
+@Table(name = "attachments")
 @ToString
-public class FileEntity extends BaseEntity implements Serializable {
+public class Attachment extends BaseEntity implements Serializable {
     @Id
-    @Column(name = "file_id")
+    @Column(name = "id")
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "org.hibernate.id.UUIDGenerator")
     private UUID id;
-    @Column(name = "original_file_name", nullable = false)
-    private String originalFileName;
-    @Builder.Default
-    @Column(name = "file_name", unique = true, nullable = false)
-    private String fileName = Generator.generateFileName();
-    @Column(name = "file_extension", nullable = false)
+    @Column(name = "filename", nullable = false)
+    private String filename;
+    @Column(name = "extension", nullable = false)
     private String extension;
     @Column(name = "content_type", nullable = false)
     private String contentType;
-    @Column(name = "size", nullable = false)
-    private Long size;
+    @Column(name = "length", nullable = false)
+    private Long length;
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        FileEntity fileEntity = (FileEntity) o;
-        return id != null && Objects.equals(id, fileEntity.id);
+        Attachment attachment = (Attachment) o;
+        return id != null && Objects.equals(id, attachment.id);
     }
 
     @Override

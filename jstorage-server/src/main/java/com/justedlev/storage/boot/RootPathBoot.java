@@ -1,7 +1,7 @@
 package com.justedlev.storage.boot;
 
 import com.justedlev.storage.properties.JStorageProperties;
-import com.justedlev.storage.repository.FileRepository;
+import com.justedlev.storage.repository.AttachmentRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,13 +16,13 @@ import java.nio.file.Files;
 @RequiredArgsConstructor
 public class RootPathBoot implements ApplicationRunner {
     private final JStorageProperties properties;
-    private final FileRepository fileRepository;
+    private final AttachmentRepository attachmentRepository;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
         if (Files.notExists(properties.getRootPath())) {
             Files.createDirectory(properties.getRootPath());
-            fileRepository.deleteAll();
+            attachmentRepository.deleteAll();
             log.info("Created root directory: {}", properties.getRootPath().toAbsolutePath());
         }
     }

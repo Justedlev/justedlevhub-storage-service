@@ -9,10 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Builder
-public class FileResponse {
-    private String fileName;
+public class AttachmentResponse {
+    private String filename;
     private String extension;
     private String contentType;
     private String url;
-    private Long size;
+    private Long length;
 }

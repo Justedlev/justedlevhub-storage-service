@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class DeletedFileResponse {
     @Builder.Default
     private Boolean isDeleted = Boolean.FALSE;
-    private String fileName;
+    private String name;
     private String extension;
     private String contentType;
     private String url;

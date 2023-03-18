@@ -1,10 +1,9 @@
 package com.justedlev.storage.controller;
 
 import com.justedlev.storage.client.EndpointConstant;
-import com.justedlev.storage.common.validator.NotEmptyMultipartFile;
+import com.justedlev.storage.model.response.AttachmentResponse;
 import com.justedlev.storage.model.response.DeletedFileResponse;
-import com.justedlev.storage.model.response.FileResponse;
-import com.justedlev.storage.service.FileService;
+import com.justedlev.storage.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;
@@ -16,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -23,26 +23,20 @@ import java.util.List;
 @RequiredArgsConstructor
 @Validated
 public class FileController {
-    private final FileService fileService;
+    private final AttachmentService attachmentService;
 
     @PostMapping(value = EndpointConstant.UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<List<FileResponse>> upload(@RequestPart @Valid List<@NotEmptyMultipartFile MultipartFile> files) {
-        return ResponseEntity.ok(fileService.store(files));
+    public ResponseEntity<List<AttachmentResponse>> upload(@RequestPart @Valid List<MultipartFile> files) {
+        return ResponseEntity.ok(attachmentService.store(files));
     }
 
     @DeleteMapping(value = EndpointConstant.FILE_NAME_DELETE)
-    public ResponseEntity<DeletedFileResponse> delete(@PathVariable String fileName) {
-        return ResponseEntity.ok(fileService.delete(fileName));
+    public ResponseEntity<DeletedFileResponse> delete(@PathVariable UUID id) {
+        return ResponseEntity.ok(attachmentService.delete(id));
     }
 
-    @GetMapping(value = EndpointConstant.FILE_NAME)
-    public ResponseEntity<Resource> download(@PathVariable String fileName) {
-        var file = fileService.getByName(fileName);
-
-        return ResponseEntity.ok()
-                .headers(file.getHeaders())
-                .contentLength(file.getSize())
-                .contentType(file.getContentType())
-                .body(file.getResource());
+    @GetMapping(value = EndpointConstant.FILE_NAME + "/*")
+    public ResponseEntity<Resource> download(@PathVariable UUID id) {
+        return attachmentService.download(id).buildResponse();
     }
 }

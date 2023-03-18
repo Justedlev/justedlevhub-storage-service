@@ -6,6 +6,6 @@ import com.justedlev.storage.model.response.UploadFileResponse;
 
 import java.util.List;
 
-public interface UploadFileComponent {
+public interface FileUploader {
 	List<UploadFileResponse> upload(List<MultipartFile> files);
 }

@@ -3,25 +3,26 @@ package com.justedlev.storage.component.impl;
 import com.justedlev.storage.component.DeleteFileComponent;
 import com.justedlev.storage.model.response.DeletedFileResponse;
 import com.justedlev.storage.properties.JStorageProperties;
-import com.justedlev.storage.repository.FileRepository;
-import com.justedlev.storage.repository.entity.FileEntity;
+import com.justedlev.storage.repository.AttachmentRepository;
+import com.justedlev.storage.repository.entity.Attachment;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.nio.file.Files;
+import java.util.UUID;
 
 @Component
 @RequiredArgsConstructor
 public class DeleteFileComponentImpl implements DeleteFileComponent {
-    private final FileRepository fileRepository;
+    private final AttachmentRepository attachmentRepository;
     private final JStorageProperties properties;
     private final ModelMapper defaultMapper;
 
     @Override
-    public DeletedFileResponse deleteByName(String fileName) {
-        return fileRepository.findByFileName(fileName)
+    public DeletedFileResponse delete(UUID id) {
+        return attachmentRepository.findById(id)
                 .map(current -> {
                     var res = defaultMapper.map(current, DeletedFileResponse.class);
                     res.setIsDeleted(delete(current));
@@ -29,21 +30,17 @@ public class DeleteFileComponentImpl implements DeleteFileComponent {
                     return res;
                 })
                 .orElse(DeletedFileResponse.builder()
-                        .fileName(fileName)
+                        .name(id.toString())
                         .build());
 
     }
 
     @SneakyThrows
-    private Boolean delete(FileEntity entity) {
-        var file = properties.getRootPath().resolve(entity.getFileName());
-
-        if (!Files.exists(file)) {
-            return Boolean.FALSE;
-        }
-
+    private Boolean delete(Attachment entity) {
+        var file = properties.getRootPath().resolve(entity.getId().toString());
+        if (!Files.exists(file)) return Boolean.FALSE;
         Files.delete(file);
-        fileRepository.delete(entity);
+        attachmentRepository.delete(entity);
 
         return Boolean.TRUE;
     }

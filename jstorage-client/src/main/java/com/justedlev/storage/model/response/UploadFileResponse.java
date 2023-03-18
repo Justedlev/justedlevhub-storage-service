@@ -10,10 +10,10 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class UploadFileResponse {
-    private String fileName;
+    private String filename;
     private String extension;
     private String contentType;
     private String url;
-    private Long size;
+    private Long length;
     private String path;
 }
