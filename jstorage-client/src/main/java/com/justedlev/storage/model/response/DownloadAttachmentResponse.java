@@ -6,9 +6,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+
+import java.util.Optional;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -36,10 +39,17 @@ public class DownloadAttachmentResponse {
     }
 
     private String getContentDisposition() {
-        if (StringUtils.containsAnyIgnoreCase(getContentType().getType(), "video", "image", "audio")) {
-            return String.format("inline; \"%s\"", getFilename());
-        }
+        return ContentDisposition.builder(getType())
+                .filename(getFilename())
+                .build()
+                .toString();
+    }
 
-        return String.format("attachment; \"%s\"", getFilename());
+    private String getType() {
+        return Optional.ofNullable(getContentType())
+                .map(MediaType::getType)
+                .filter(type -> StringUtils.containsAnyIgnoreCase(type, "video", "image", "audio"))
+                .map(c -> "inline")
+                .orElse("attachment");
     }
 }

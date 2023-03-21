@@ -35,8 +35,9 @@ public class FileController {
         return ResponseEntity.ok(attachmentService.delete(id));
     }
 
-    @GetMapping(value = EndpointConstant.FILE_NAME + "/*")
-    public ResponseEntity<Resource> download(@PathVariable UUID id) {
+    @GetMapping(value = EndpointConstant.FILE_NAME + "/{filename}")
+    public ResponseEntity<Resource> download(@PathVariable UUID id, @PathVariable String filename) {
+        log.info("Request to download file: {}", filename);
         return attachmentService.download(id).buildResponse();
     }
 }
