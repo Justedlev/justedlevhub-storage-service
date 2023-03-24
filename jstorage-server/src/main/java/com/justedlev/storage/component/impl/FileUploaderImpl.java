@@ -1,8 +1,7 @@
 package com.justedlev.storage.component.impl;
 
-import com.justedlev.storage.client.EndpointConstant;
 import com.justedlev.storage.component.FileUploader;
-import com.justedlev.storage.model.response.UploadFileResponse;
+import com.justedlev.storage.model.response.AttachmentInfoResponse;
 import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.properties.ServiceProperties;
 import com.justedlev.storage.repository.AttachmentRepository;
@@ -29,9 +28,9 @@ public class FileUploaderImpl implements FileUploader {
     @SneakyThrows
     @Transactional
     @Override
-    public List<UploadFileResponse> upload(List<MultipartFile> files) {
+    public List<AttachmentInfoResponse> upload(List<MultipartFile> files) {
         return saveFiles(files).stream()
-                .map(current -> UploadFileResponse.builder()
+                .map(current -> AttachmentInfoResponse.builder()
                         .url(getUri(current))
                         .contentType(current.getContentType())
                         .extension(current.getExtension())
@@ -43,7 +42,7 @@ public class FileUploaderImpl implements FileUploader {
 
     private String getUri(Attachment attachment) {
         return UriComponentsBuilder.fromHttpUrl(serviceProperties.getHost())
-                .path(EndpointConstant.FILE)
+                .path(FileEndpointConstant.FILE)
                 .path("/" + attachment.getId())
                 .path("/" + attachment.getFilename())
                 .toUriString();

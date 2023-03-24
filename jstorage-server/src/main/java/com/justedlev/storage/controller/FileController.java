@@ -1,8 +1,6 @@
 package com.justedlev.storage.controller;
 
-import com.justedlev.storage.client.EndpointConstant;
-import com.justedlev.storage.model.response.AttachmentResponse;
-import com.justedlev.storage.model.response.DeletedFileResponse;
+import com.justedlev.storage.model.response.AttachmentInfoResponse;
 import com.justedlev.storage.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,29 +11,28 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.validation.Valid;
 import java.util.List;
 import java.util.UUID;
 
 @Slf4j
 @RestController
-@RequestMapping(EndpointConstant.FILE)
+@RequestMapping("/file")
 @RequiredArgsConstructor
 @Validated
 public class FileController {
     private final AttachmentService attachmentService;
 
-    @PostMapping(value = EndpointConstant.UPLOAD, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<List<AttachmentResponse>> upload(@RequestPart @Valid List<MultipartFile> files) {
+    @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<List<AttachmentInfoResponse>> upload(@RequestPart List<MultipartFile> files) {
         return ResponseEntity.ok(attachmentService.store(files));
     }
 
-    @DeleteMapping(value = EndpointConstant.FILE_NAME_DELETE)
-    public ResponseEntity<DeletedFileResponse> delete(@PathVariable UUID id) {
+    @DeleteMapping(value = "/delete/{id}")
+    public ResponseEntity<AttachmentInfoResponse> delete(@PathVariable UUID id) {
         return ResponseEntity.ok(attachmentService.delete(id));
     }
 
-    @GetMapping(value = EndpointConstant.FILE_NAME + "/{filename}")
+    @GetMapping(value = "/download/{id}/{filename}")
     public ResponseEntity<Resource> download(@PathVariable UUID id, @PathVariable String filename) {
         log.info("Request to download file: {}", filename);
         return attachmentService.download(id).buildResponse();

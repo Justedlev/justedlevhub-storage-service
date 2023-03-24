@@ -1,7 +1,7 @@
 server:
   port: 0
   servlet:
-    context-path: ${SERVER_MAIN_PATH:/api}
+    context-path: ${SERVER_MAIN_PATH:/api/v1}
 spring:
   application:
     name: jstorage-service

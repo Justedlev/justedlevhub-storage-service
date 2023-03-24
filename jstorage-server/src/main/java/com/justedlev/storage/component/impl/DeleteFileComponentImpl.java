@@ -1,7 +1,7 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.DeleteFileComponent;
-import com.justedlev.storage.model.response.DeletedFileResponse;
+import com.justedlev.storage.model.response.AttachmentInfoResponse;
 import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.repository.AttachmentRepository;
 import com.justedlev.storage.repository.entity.Attachment;
@@ -21,17 +21,10 @@ public class DeleteFileComponentImpl implements DeleteFileComponent {
     private final ModelMapper defaultMapper;
 
     @Override
-    public DeletedFileResponse delete(UUID id) {
+    public AttachmentInfoResponse delete(UUID id) {
         return attachmentRepository.findById(id)
-                .map(current -> {
-                    var res = defaultMapper.map(current, DeletedFileResponse.class);
-                    res.setIsDeleted(delete(current));
-
-                    return res;
-                })
-                .orElse(DeletedFileResponse.builder()
-                        .name(id.toString())
-                        .build());
+                .map(current -> defaultMapper.map(current, AttachmentInfoResponse.class))
+                .orElse(null);
 
     }
 

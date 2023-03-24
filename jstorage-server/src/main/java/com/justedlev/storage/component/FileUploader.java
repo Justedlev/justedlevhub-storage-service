@@ -1,11 +1,10 @@
 package com.justedlev.storage.component;
 
+import com.justedlev.storage.model.response.AttachmentInfoResponse;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.justedlev.storage.model.response.UploadFileResponse;
 
 import java.util.List;
 
 public interface FileUploader {
-	List<UploadFileResponse> upload(List<MultipartFile> files);
+	List<AttachmentInfoResponse> upload(List<MultipartFile> files);
 }

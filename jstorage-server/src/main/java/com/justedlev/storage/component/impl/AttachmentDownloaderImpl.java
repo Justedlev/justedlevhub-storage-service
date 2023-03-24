@@ -1,7 +1,7 @@
 package com.justedlev.storage.component.impl;
 
 import com.justedlev.storage.component.AttachmentDownloader;
-import com.justedlev.storage.model.response.DownloadAttachmentResponse;
+import com.justedlev.storage.model.response.AttachmentResponse;
 import com.justedlev.storage.properties.JStorageProperties;
 import com.justedlev.storage.repository.AttachmentRepository;
 import com.justedlev.storage.repository.entity.Attachment;
@@ -22,13 +22,13 @@ public class AttachmentDownloaderImpl implements AttachmentDownloader {
     private final AttachmentRepository attachmentRepository;
 
     @Override
-    public DownloadAttachmentResponse download(UUID id) {
+    public AttachmentResponse download(UUID id) {
         Attachment entity = attachmentRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         String.format("File %s not found", id)));
         var file = getFile(entity);
 
-        return DownloadAttachmentResponse.builder()
+        return AttachmentResponse.builder()
                 .filename(entity.getFilename())
                 .extension(entity.getExtension())
                 .resource(new FileSystemResource(file))

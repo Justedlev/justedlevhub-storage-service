@@ -1,9 +1,9 @@
 package com.justedlev.storage.component;
 
-import com.justedlev.storage.model.response.DownloadAttachmentResponse;
+import com.justedlev.storage.model.response.AttachmentResponse;
 
 import java.util.UUID;
 
 public interface AttachmentDownloader {
-    DownloadAttachmentResponse download(UUID id);
+    AttachmentResponse download(UUID id);
 }

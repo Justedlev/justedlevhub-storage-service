@@ -1,9 +1,9 @@
 package com.justedlev.storage.component;
 
-import com.justedlev.storage.model.response.DeletedFileResponse;
+import com.justedlev.storage.model.response.AttachmentInfoResponse;
 
 import java.util.UUID;
 
 public interface DeleteFileComponent {
-    DeletedFileResponse delete(UUID id);
+    AttachmentInfoResponse delete(UUID id);
 }
