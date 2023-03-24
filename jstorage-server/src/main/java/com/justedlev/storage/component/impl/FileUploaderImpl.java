@@ -42,7 +42,7 @@ public class FileUploaderImpl implements FileUploader {
 
     private String getUri(Attachment attachment) {
         return UriComponentsBuilder.fromHttpUrl(serviceProperties.getHost())
-                .path(FileEndpointConstant.FILE)
+                .path("/file")
                 .path("/" + attachment.getId())
                 .path("/" + attachment.getFilename())
                 .toUriString();

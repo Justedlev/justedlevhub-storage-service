@@ -18,8 +18,8 @@ spring:
     open-in-view: false
   servlet:
     multipart:
-      max-file-size: 100GB
-      max-request-size: 100GB
+      max-file-size: 15GB
+      max-request-size: 15GB
 eureka:
   client:
     service-url:
