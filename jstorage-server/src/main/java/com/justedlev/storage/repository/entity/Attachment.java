@@ -2,6 +2,7 @@ package com.justedlev.storage.repository.entity;
 
 import com.justedlev.common.entity.Auditable;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -12,11 +13,11 @@ import java.util.UUID;
 
 @Getter
 @Setter
-@Builder
+@SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "attachments")
+@Table(name = "attachment")
 @ToString
 public class Attachment extends Auditable implements Serializable {
     @Id

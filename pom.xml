@@ -45,6 +45,12 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>com.justedlevhub</groupId>
+            <artifactId>justedlevhub-sdk</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+        </dependency>
+
         <!--Utils-->
         <dependency>
             <groupId>org.projectlombok</groupId>
