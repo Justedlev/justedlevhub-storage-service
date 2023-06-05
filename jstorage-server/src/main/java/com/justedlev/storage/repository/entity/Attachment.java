@@ -1,6 +1,6 @@
 package com.justedlev.storage.repository.entity;
 
-import com.justedlev.common.entity.BaseEntity;
+import com.justedlev.common.entity.Auditable;
 import lombok.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
@@ -10,15 +10,15 @@ import java.io.Serializable;
 import java.util.Objects;
 import java.util.UUID;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "attachments")
 @ToString
-public class Attachment extends BaseEntity implements Serializable {
+public class Attachment extends Auditable implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "uuid")
